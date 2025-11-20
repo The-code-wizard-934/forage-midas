@@ -1,0 +1,25 @@
+# This property is for your own code
+midas:
+  kafka:
+    topic: midas.transactions
+
+# These are Spring Boot properties
+spring:
+  
+  # These JSON properties must be at this level,
+  # parallel to the 'kafka:' block below.
+  json:
+    value:
+      default:
+        type: "com.jpmc.midascore.foundation.Transaction"
+    trusted:
+      packages: "*" # Trusts all packages
+
+  # This is the Kafka-specific configuration
+  kafka:
+    consumer:
+      group-id: midas-core-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      # The 'properties' block is now empty or can be removed,
+      # since the json settings are moved.

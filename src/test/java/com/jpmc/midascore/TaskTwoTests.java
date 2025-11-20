@@ -7,8 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
+@TestPropertySource(properties = {
+        // 1. TOPIC
+        "midas.kafka.topic=test-topic",
+
+        // 2. PRODUCER (Sends JSON)
+        "spring.kafka.producer.value-serializer=org.springframework.kafka.support.serializer.JsonSerializer",
+
+        // 3. CONSUMER (Receives String)
+        "spring.kafka.consumer.value-deserializer=org.apache.kafka.common.serialization.StringDeserializer",
+
+        // 4. FIX THE RACE CONDITION - ADD THIS LINE
+        "spring.kafka.consumer.auto-offset-reset=earliest"
+})
 @DirtiesContext
 @EmbeddedKafka(partitions = 1, brokerProperties = {"listeners=PLAINTEXT://localhost:9092", "port=9092"})
 class TaskTwoTests {
