@@ -17,13 +17,20 @@ public class TransactionRecord {
 
     private float amount;
 
+    @Column
+    private float incentive;
+
     public TransactionRecord() {}
 
-    public TransactionRecord(UserRecord sender, UserRecord recipient, float amount) {
+    public TransactionRecord(UserRecord sender, UserRecord recipient, float amount, float incentiveAmount) {
         this.sender = sender;
         this.recipient = recipient;
         this.amount = amount;
+        this.incentive = incentiveAmount;   // ✅ FIXED
     }
+
+    public float getIncentive() { return incentive; }
+    public void setIncentive(float incentive) { this.incentive = incentive; }
 
     public UserRecord getSender() { return sender; }
     public UserRecord getRecipient() { return recipient; }
