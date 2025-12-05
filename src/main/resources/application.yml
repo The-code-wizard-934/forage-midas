@@ -1,7 +1,9 @@
-# Custom app properties
 midas:
   kafka:
-    topic: transactions   # <-- use ONLY ONE topic everywhere
+    topic: midas.transactions
+
+server:
+  port: 33400
 
 spring:
   datasource:
@@ -21,9 +23,5 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.value.default.type: com.jpmc.midascore.foundation.Transaction
+        spring.json.value.default.type: "com.jpmc.midascore.foundation.Transaction"
         spring.json.trusted.packages: "*"
-
-# Alias (optional) – keep same as midas.kafka.topic
-kafka:
-  topic: transactions
